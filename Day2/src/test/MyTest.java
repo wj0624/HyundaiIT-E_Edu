@@ -9,7 +9,7 @@ public class MyTest {
 	//필드들
 	private int a = 100;	//instance variable, Heap에 만들어짐
 	private static int b = 200; //class variable, method area에 만들어짐
-						//Heap의 인스턴스가 없어도 사용 가능 -> 클래스 이름 가지고 바로 사용 가능
+								//Heap의 인스턴스가 없어도 사용 가능 -> 클래스 이름 가지고 바로 사용 가능
 	private int c = 300;
 	
 	//생성자들
