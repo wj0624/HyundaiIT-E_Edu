@@ -10,7 +10,5 @@ public class Test06 {
 		System.out.println(str.toLowerCase());
 		System.out.println(str.substring(0,4));
 		System.out.println(str.substring(4));
-		
 	}
-
 }
