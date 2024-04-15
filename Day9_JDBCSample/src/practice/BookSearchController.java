@@ -73,7 +73,7 @@ public class BookSearchController implements Initializable	 {
 			rs.close();
 			pstmt.close();
 			con.close();
-		} catch (Exception e1) {
+		} catch (Exception e2) {
 
 		}
 		
