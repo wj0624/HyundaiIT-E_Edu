@@ -32,10 +32,11 @@ public class BookSearchController implements Initializable {
 		// controller 에서 로직 처리를 직접 하지 않음
 		// 로직 처리를 위한 서비스 객체가 필요함
 		BookSearchService service = new BookSearchService();
-		// 해당 객체를 이용해서 일을 시켜요
+		// 해당 객체를 이용해서 그 객체의 메서드로 일을 시킴
+		// 한번만 만들어놓고 갖다쓰면 되는 건데 일단 지금은 이렇게 함
 		String keyword = textField.getText();
 		ObservableList<BookVO> data = service.searchBookByKeyword(keyword);
-		
+		// 메서드를 통해 return 받은 data 를 ObservableList 에 받음
 		tableView.setItems(data);
 	}
 	

@@ -1,13 +1,16 @@
 package booksearch.vo;
 //package 분리
 
+
 public class BookVO {
-	
+	// 당연히 테이블 이름으로 짓는 것
+	// 요즘 트렌드는 뒤에 VO 나 DTO 를 붙임
 	private String bisbn;
 	private String btitle;
 	private int bprice;
 	private String bauthor;
-	
+	// private field 로 모든 컬럼을 선언해주는 게 기본
+
 	public BookVO(String bisbn, String btitle, int bprice, String bauthor) {
 		super();
 		this.bisbn = bisbn;

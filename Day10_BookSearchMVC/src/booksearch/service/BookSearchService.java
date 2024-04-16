@@ -9,6 +9,7 @@ public class BookSearchService {
 	// 로직 처리 객체
 	// 로직 처리를 위한 메서드만 들어있는 것
 	// controller 가 얘한테 시켜서 일을 하는 것
+	// 이 단위 하나가 transaction! 서비스의 메서드 하나가 트랜잭션임!
 	public ObservableList<BookVO> searchBookByKeyword(String keyword) {
 		// 이 안에서 일반 로직을 처리하면 됨
 		// service model 쪽이니까 여기서 DB 처리를 하면 안 됨
@@ -17,6 +18,7 @@ public class BookSearchService {
 		// 이제 DAO 만들러 감
 		BookDAO dao = new BookDAO();
 		// DB 처리 SELECT 하는 건 DAO 객체가 해야 함
+		// 로직이 복잡해지면 여러 DAO 에게 일을 굉장히 많이 시키게 됨
 		ObservableList<BookVO> result = dao.select(keyword);
 		// DAO 는 메서드 같이 이름을 지으면 안 됨. DAO 는 단일 처리만 하기 때문
 		return result;
