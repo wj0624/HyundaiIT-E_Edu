@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"mybatis-3-mapper.dtd" >
+<mapper namespace="mybook">
+	
+	<!-- 검색 -->
+	<select id="selectByTitle" parameterType="String"
+		resultType="BookVO"> 
+		<![CDATA[
+			SELECT bisbn, btitle, bprice, bauthor
+			FROM book
+			WHERE btitle LIKE CONCAT('%', #{btitle},'%')
+		]]>
+	</select>
+	
+	<!-- 삭제 -->
+	<delete id="deleteByISBN" parameterType="String">
+		<![CDATA[
+			DELETE
+			FROM book
+			WHERE bisbn = #{bisbn}
+		]]>
+	</delete>
+	
+	<!-- 수정 -->
+	<update id="titleUpdate" parameterType="BookVO">
+		<![CDATA[
+			UPDATE book
+			SET btitle = #{btitle}
+			WHERE bisbn = #{bisbn}
+		]]>
+	</update>
+	
+</mapper>
