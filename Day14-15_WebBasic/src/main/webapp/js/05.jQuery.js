@@ -52,11 +52,16 @@
 			// 성공했다면 서버로부터 JSON 가져와서 객체로 변환시켰음
 			// 해당 결과 객체가 함수의 인자로 전달 됨
 			// var title = result.boxOfficeResult.dailyBoxOfficeList[0].movieNm
+			
+			// arr 배열에 해당 날짜에 대한 영화 리스트 저장
 			var arr = result.boxOfficeResult.dailyBoxOfficeList;
 			
 			// 이렇게 데이터를 받아와서 jQuery를 이용해서 element를 생성한 후
 			// 화면에 붙여서 결과를 표현
+			
+			// 불러온 영화리스트에 대해 반복문 수행
 			$.each(arr, function(idx, item){
+				// 영화 정보 저장 객체
 				var obj ={
 					rank : item.rank,
 				 	title : item.movieNm,
@@ -64,6 +69,7 @@
 				 	audiAcc : item.audiAcc
 				}
 				
+				// 행 생성 후 해당 행에 각 정보를 열로 집어 넣음
 				var tr = $("<tr></tr>");
 				tr.append($("<td></td>").text(obj.rank));
 				// 비동기이므로 rank를 id로 설정하여, 각 순위에 맞는 이미지에 매핑하도록 함
@@ -71,17 +77,19 @@
 				tr.append($("<td></td>").text(obj.title));
 				tr.append($("<td></td>").text(obj.openDt));
 				tr.append($("<td></td>").text(obj.audiAcc));
-				$("tbody").append(tr);
+				$("tbody").append(tr); // 표에 해당 행 추가
 				
 				// 카카오 이미지 검색 
 				$.ajax({
 					async: true,
 					url: "https://dapi.kakao.com/v2/search/image",
 					type: "GET",
+					// 카카오 API 필수 요청데이터 Authorization(key), query
 					headers: {
                         "Authorization": "KakaoAK b00a29155b38a71ba2de1fd0eed75971"
                     },
 					data:{
+						// 검색을 원하는 질의어 : 영화 제목
 						query : obj.title
 					},
 					timeout: 3000,
@@ -98,9 +106,6 @@
 				});
 				
 			});
-			
-			
-			
 			// alert() : 경고창 띄우기
 			//alert(obj.title)
 		},
