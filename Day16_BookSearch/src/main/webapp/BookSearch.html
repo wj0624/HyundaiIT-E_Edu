@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>도서검색 프로그램</title>
+	</head>
+	<body>
+		<h1>도서검색 프로그램</h1>
+		<br>
+		<form action="http://localhost:8080/booksearch/search"
+			  method="post">
+			도서명 키워드 : <input type="text" name="keyword">
+			<br><br>
+			<ul>
+				<li><input type="radio" name="price" id="radio1" value="10000">
+				<label for="radio1">10,000원 미만</label></li> 
+				<li><input type="radio" name="price" id="radio2" value="20000">
+				<label for="radio2">20,000원 미만</label></li>
+				<li><input type="radio" name="price" id="radio3" value="30000">
+				<label for="radio3">30,000원 미만</label></li>
+				<li><input type="radio" name="price" id="radio4" value="40000">
+				<label for="radio4">40,000원 미만</label></li>
+			</ul>
+			<br><br>
+			<button type="submit">도서 검색</button>
+		</form>
+	</body>
+</html>

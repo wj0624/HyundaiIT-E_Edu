@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"mybatis-3-mapper.dtd" >
+<mapper namespace="mybook">
+	
+	<!-- 검색 -->
+	<select id="selectByTitlenPrice" parameterType="BookVO"
+		resultType="BookVO"> 
+		<![CDATA[
+			SELECT btitle, bprice
+			FROM book
+			WHERE btitle LIKE CONCAT('%', #{btitle},'%') AND
+				  bprice < ${bprice}
+		]]>
+		<!-- bprice는 정수이므로 $를 써서 사용, #은 문자열 -->
+	</select>
+	
+</mapper>
