@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"mybatis-3-mapper.dtd" >
+<mapper namespace="mywebsite">
+	
+	<insert id="insertMember" parameterType="MemberVO">
+		<![CDATA[
+			INSERT INTO member (userID, password, name, birthday, gender)
+        	VALUES (#{userID}, #{password}, #{name}, #{birthday}, #{gender})
+		]]>
+	</insert>
+	
+</mapper>
