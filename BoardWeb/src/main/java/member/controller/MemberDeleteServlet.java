@@ -2,33 +2,27 @@ package member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import member.service.MemberService;
 import member.vo.MemberVO;
 
-
 /**
- * Servlet implementation class SignUpServlet
+ * Servlet implementation class MemberDeleteServlet
  */
-@WebServlet("/signup")
-public class SignUpServlet extends HttpServlet {
+@WebServlet("/delete")
+public class MemberDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SignUpServlet() {
+    public MemberDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -49,27 +43,19 @@ public class SignUpServlet extends HttpServlet {
 		
 		// 1. 입력받고(Controller 역할)
 		String userID = request.getParameter("userID");
-		String password = request.getParameter("password");
-		String name = request.getParameter("userName");
-		String birthday = request.getParameter("bday");
-		String gender = request.getParameter("gender");
-
-		MemberVO vo = new MemberVO(userID, password, name, birthday,gender);
-	
-		// 2. 로직처리(Service에게 위임)
-		MemberService service = new MemberService();
-		MemberVO result = service.signUpMember(vo);
+		MemberVO vo = new MemberVO();
+		vo.setUserID(userID);
 		
-		// 3. 출력처리
-		//회원가입 성공 alert 띄우기
-		String script = "<script>alert('회원가입 성공! 로그인 페이지로 이동합니다.'); window.location.href='html/login.html';</script>";
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.print(script);
-//		RequestDispatcher rd = 
-//				request.getRequestDispatcher("jsp/board.jsp");
-//
-//		rd.forward(request, response); // request & response JSP에게 전달
+		MemberService service = new MemberService();
+		int result = service.deleteMember(vo);
+		
+		if(result == 1) {			
+			String script = "<script>alert('회원탈퇴가 완료되었습니다.'); window.location.href='/board/articles';</script>";
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print(script);
+		}
+		
 	}
 
 }

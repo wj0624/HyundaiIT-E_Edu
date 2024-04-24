@@ -3,12 +3,56 @@
 	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	"mybatis-3-mapper.dtd" >
 <mapper namespace="mywebsite">
-	
+	<!-- Member -->
+	<!-- 회원가입 -->
 	<insert id="insertMember" parameterType="MemberVO">
 		<![CDATA[
 			INSERT INTO member (userID, password, name, birthday, gender)
         	VALUES (#{userID}, #{password}, #{name}, #{birthday}, #{gender})
 		]]>
 	</insert>
+	<!-- 로그인 -->
+	<select id="logIn" parameterType="MemberVO" resultType="MemberVO">
+		<![CDATA[
+			SELECT userID, password, name, birthday, gender
+			FROM member
+			WHERE userID = #{userID} AND
+				  password = #{password}
+		]]>
+	</select>
 	
+	<!-- 정보수정 -->
+	<update id="changeMember" parameterType="MemberVO">
+		<![CDATA[
+			UPDATE member 
+			SET password = #{password},
+				name = #{name},
+				birthday = #{birthday}, 
+				gender = #{gender}
+        	WHERE userID = #{userID}
+		]]>
+	</update>
+	<!-- 회원탈퇴 -->
+	<delete id="deleteMember" parameterType="MemberVO">
+		<![CDATA[
+			DELETE FROM member 
+			WHERE userID = #{userID}
+		]]>
+	</delete>
+	
+	<!-- Board -->
+	<insert id="insertArticle" parameterType="BoardVO">
+		<![CDATA[
+			INSERT INTO board (title, content, author)
+        	VALUES (#{title}, #{content}, #{author})
+		]]>
+	</insert>
+	
+	<select id="selectArticles" resultType="BoardVO">
+		<![CDATA[
+			SELECT b.post_id, b.title, b.content, m.name, b.created_date
+			FROM board b JOIN member m ON b.author = m.userID
+			ORDER BY b.post_id DESC
+		]]>
+	</select>
 </mapper>

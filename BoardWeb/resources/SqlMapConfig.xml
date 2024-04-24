@@ -17,6 +17,7 @@
 	<!-- Alias 설정 -->
 	<typeAliases>
 		<typeAlias alias="MemberVO" type="member.vo.MemberVO" />
+		<typeAlias alias="BoardVO" type="board.vo.BoardVO" />
 	</typeAliases>
 	
 	<!-- Database 연결 설정 -->

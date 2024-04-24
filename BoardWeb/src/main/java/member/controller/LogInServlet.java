@@ -2,9 +2,6 @@ package member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,18 +14,17 @@ import javax.servlet.http.HttpSession;
 import member.service.MemberService;
 import member.vo.MemberVO;
 
-
 /**
- * Servlet implementation class SignUpServlet
+ * Servlet implementation class LogInServlet
  */
-@WebServlet("/signup")
-public class SignUpServlet extends HttpServlet {
+@WebServlet("/login")
+public class LogInServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SignUpServlet() {
+    public LogInServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,31 +41,50 @@ public class SignUpServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 1. 입력
 		request.setCharacterEncoding("UTF-8");
-		
-		// 1. 입력받고(Controller 역할)
 		String userID = request.getParameter("userID");
 		String password = request.getParameter("password");
-		String name = request.getParameter("userName");
-		String birthday = request.getParameter("bday");
-		String gender = request.getParameter("gender");
-
-		MemberVO vo = new MemberVO(userID, password, name, birthday,gender);
-	
-		// 2. 로직처리(Service에게 위임)
-		MemberService service = new MemberService();
-		MemberVO result = service.signUpMember(vo);
+		MemberVO vo = new MemberVO();
+		vo.setUserID(userID);
+		vo.setPassword(password);
 		
-		// 3. 출력처리
-		//회원가입 성공 alert 띄우기
-		String script = "<script>alert('회원가입 성공! 로그인 페이지로 이동합니다.'); window.location.href='html/login.html';</script>";
+		// 2.로직처리
+		MemberService service = new MemberService();
+		MemberVO result = service.logIn(vo);
+		
+		if(result!=null) {
+			// 로그인 성공시(가져 온 member의 ID와 password가 일치하는 경우)
+			if(result.getUserID().equals(vo.getUserID()) &&
+					result.getPassword().equals(vo.getPassword())) {
+				
+				// Session 객체 생성
+				HttpSession session = request.getSession(true);
+				session.setAttribute("MemberDATA", result);
+				
+				//로그인 성공 alert 띄우기
+				String script = "<script>alert('로그인 성공!'); window.location.href='/board/articles';</script>";
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.print(script);
+				
+				// 3. 출력처리
+//				RequestDispatcher rd = 
+//						request.getRequestDispatcher("jsp/board.jsp");
+//				// JSP에게 데이터 전달
+//				// JSP에게 전달되는 request 객체에 원하는 데이터를 붙여서 전달
+//				request.setAttribute("boardList", result);
+//				rd.forward(request, response); // request & response JSP에게 전달
+				
+				return;
+			}
+		}
+		
+		// 로그인 실패시
+		String script = "<script>alert('로그인 실패. ID와 비밀번호를 확인해 주세요.'); window.location.href='html/login.html';</script>";
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.print(script);
-//		RequestDispatcher rd = 
-//				request.getRequestDispatcher("jsp/board.jsp");
-//
-//		rd.forward(request, response); // request & response JSP에게 전달
 	}
 
 }

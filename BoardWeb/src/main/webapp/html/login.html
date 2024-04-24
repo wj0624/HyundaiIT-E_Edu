@@ -42,7 +42,7 @@
         background-color: rgb(61, 135, 255);
     }
     a {
-        font-size: 12px;
+        font-size: 15px;
         color: darkgray;
         text-decoration-line: none;
        
@@ -53,22 +53,19 @@
 </style>
 </head>
 <body>
-<form>
+<form action="http://localhost:8080/board/login" method="post">
     <table>
     <tr>
         <td><h2>로그인</h2></td>
     </tr>
     <tr>
-        <td><input type="text" placeholder="ID"></td>
+        <td><input type="text" placeholder="ID" name="userID"></td>
     </tr>
     <tr>
-        <td><input type="password" placeholder=Password></td>
+        <td><input type="password" placeholder="Password" name="password"></td>
     </tr>
     <tr>
-       <td><input type="checkbox"> 로그인 정보 저장</td>
-    </tr>
-    <tr>
-        <td><input type="submit" value="Sign in" class="btn" onclick="alert('로그인 성공!')"></td>
+        <td><input type="submit" value="Log in" class="btn" ></td>
     </tr>
     <tr>
         <td class="join"><a href="signup.html">회원가입</a></td>

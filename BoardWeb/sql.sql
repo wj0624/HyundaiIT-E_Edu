@@ -34,4 +34,6 @@ MODIFY COLUMN gender VARCHAR(1) CHECK (gender IN ('M', 'F'));
 ALTER TABLE member
 MODIFY COLUMN birthday VARCHAR(20);
 
-SELECT * FROM member
+SELECT * from member;
+SELECT * from board;
+DELETE FROM board WHERE post_id = 1;
