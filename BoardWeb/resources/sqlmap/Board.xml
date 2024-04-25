@@ -32,6 +32,7 @@
         	WHERE userID = #{userID}
 		]]>
 	</update>
+	
 	<!-- 회원탈퇴 -->
 	<delete id="deleteMember" parameterType="MemberVO">
 		<![CDATA[
@@ -41,18 +42,48 @@
 	</delete>
 	
 	<!-- Board -->
+	<!-- 게시글 작성 -->
 	<insert id="insertArticle" parameterType="BoardVO">
 		<![CDATA[
-			INSERT INTO board (title, content, author)
-        	VALUES (#{title}, #{content}, #{author})
+			INSERT INTO board (title, content, author, name)
+        	VALUES (#{title}, #{content}, #{author}, (SELECT name FROM member WHERE userID = #{author}))
 		]]>
 	</insert>
 	
+	<!-- 게시글 리스트 -->
 	<select id="selectArticles" resultType="BoardVO">
 		<![CDATA[
-			SELECT b.post_id, b.title, b.content, m.name, b.created_date
-			FROM board b JOIN member m ON b.author = m.userID
-			ORDER BY b.post_id DESC
+			SELECT post_id, title, content, name, created_date
+			FROM board
+			ORDER BY post_id DESC
 		]]>
 	</select>
+	
+	<!-- 게시글 상세보기 -->
+	<select id="selectOneArticle" parameterType="BoardVO" resultType="BoardVO">
+		<![CDATA[
+			SELECT post_id, title, content, author, name, created_date
+			FROM board
+			WHERE post_id = ${post_id}
+		]]>
+	</select>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateArticle" parameterType="BoardVO">
+		<![CDATA[
+			UPDATE board
+			SET title = #{title},
+				content = #{content}
+        	WHERE post_id = ${post_id}
+		]]>
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteArticle" parameterType="BoardVO">
+		<![CDATA[
+			DELETE FROM board 
+			WHERE post_id = ${post_id}
+		]]>
+	</delete>
+	
 </mapper>

@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import board.vo.BoardVO;
-import member.vo.MemberVO;
 
 public class BoardDAO {
 	private SqlSession session;
@@ -26,6 +25,23 @@ public class BoardDAO {
 	
 	public List<BoardVO> selectArticles() throws Exception{
 		List<BoardVO> result = session.selectList("mywebsite.selectArticles");
+		return result;
+	}
+
+	public BoardVO selectOneArticle(BoardVO vo) {
+		BoardVO result = session.selectOne("mywebsite.selectOneArticle", vo);
+		return result;
+	}
+
+	public int updateArticle(BoardVO vo) {
+		int result = 0;
+		result = session.update("mywebsite.updateArticle", vo);
+		return result;
+	}
+
+	public int deleteArticle(BoardVO vo) {
+		int result = 0;
+		result = session.update("mywebsite.deleteArticle", vo);
 		return result;
 	}
 }

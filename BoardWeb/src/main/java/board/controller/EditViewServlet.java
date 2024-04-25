@@ -1,7 +1,6 @@
 package board.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,16 +13,16 @@ import board.service.BoardService;
 import board.vo.BoardVO;
 
 /**
- * Servlet implementation class BoardServlet
+ * Servlet implementation class EditViewServlet
  */
-@WebServlet("/articles")
-public class BoardServlet extends HttpServlet {
+@WebServlet("/editview")
+public class EditViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardServlet() {
+    public EditViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,24 +31,30 @@ public class BoardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 글 목록을 가져오는 로직을 수행합니다.
-		BoardService service = new BoardService();
-		List<BoardVO> boardList = service.showArticles();
-
-        // JSP로 글 목록을 전달합니다.
-        request.setAttribute("boardList", boardList);
-
-        // JSP로 포워딩합니다.
-        RequestDispatcher dispatcher = request.getRequestDispatcher("board.jsp");
-        dispatcher.forward(request, response);
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+		request.setCharacterEncoding("UTF-8");
+		
+		// 1. 입력받고(Controller 역할)
+		String postID = request.getParameter("postID");
+		BoardVO vo = new BoardVO();
+		vo.setPost_id(Integer.parseInt(postID));
+		
+		// 2. 로직처리(Service에게 위임)
+		BoardService service = new BoardService();
+		BoardVO result = service.viewDetail(vo);
 
+		// 3. 출력처리
+		RequestDispatcher rd = 
+				request.getRequestDispatcher("edit.jsp");
+		// JSP에게 데이터 전달
+		// JSP에게 전달되는 request 객체에 원하는 데이터를 붙여서 전달
+		request.setAttribute("selectedPOST", result);
+		rd.forward(request, response); // request & response JSP에게 전달
+	}
 }

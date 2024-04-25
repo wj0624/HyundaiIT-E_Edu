@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardVO {
-	private String post_id;
+	private int post_id;
 	private String title;
 	private String content;
 	private String author;

@@ -62,29 +62,23 @@ public class LogInServlet extends HttpServlet {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("MemberDATA", result);
 				
+				// 3. 출력처리
 				//로그인 성공 alert 띄우기
-				String script = "<script>alert('로그인 성공!'); window.location.href='/board/articles';</script>";
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
-				out.print(script);
-				
-				// 3. 출력처리
-//				RequestDispatcher rd = 
-//						request.getRequestDispatcher("jsp/board.jsp");
-//				// JSP에게 데이터 전달
-//				// JSP에게 전달되는 request 객체에 원하는 데이터를 붙여서 전달
-//				request.setAttribute("boardList", result);
-//				rd.forward(request, response); // request & response JSP에게 전달
-				
-				return;
+				out.println("<script>alert('로그인 성공!');location.href='articles';</script>");
+				// board.jsp로 리디렉션
+			    //response.sendRedirect("board.jsp");
+			    
+			    return;
 			}
 		}
 		
 		// 로그인 실패시
-		String script = "<script>alert('로그인 실패. ID와 비밀번호를 확인해 주세요.'); window.location.href='html/login.html';</script>";
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		out.print(script);
+		out.println("<script>alert('로그인 실패. ID와 비밀번호를 확인해 주세요.'); location.href='login.html';</script>");
+		//response.sendRedirect("login.html");
 	}
 
 }

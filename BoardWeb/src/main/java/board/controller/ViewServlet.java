@@ -1,4 +1,4 @@
-package member.controller;
+package board.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,19 +9,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import board.service.BoardService;
+import board.vo.BoardVO;
 
 /**
- * Servlet implementation class LogOutServlet
+ * Servlet implementation class ViewServlet
  */
-@WebServlet("/logout")
-public class LogOutServlet extends HttpServlet {
+@WebServlet("/view")
+public class ViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogOutServlet() {
+    public ViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,24 +40,24 @@ public class LogOutServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 세션을 가져옵니다.
-        HttpSession session = request.getSession(false);
-        
-        if (session != null) {
-            // 세션을 제거합니다.
-            session.invalidate();
-        }
-        
-        // 로그아웃 후 로그인 페이지로 리디렉션합니다.
-        String script = "<script>alert('로그아웃되었습니다'); location.href='articles';</script>";
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.print(script);
-        
-//        RequestDispatcher rd = 
-//				request.getRequestDispatcher("jsp/board.jsp");
-//
-//		rd.forward(request, response);
+		request.setCharacterEncoding("UTF-8");
+		
+		// 1. 입력받고(Controller 역할)
+		String postID = request.getParameter("postID");
+		BoardVO vo = new BoardVO();
+		vo.setPost_id(Integer.parseInt(postID));
+		
+		// 2. 로직처리(Service에게 위임)
+		BoardService service = new BoardService();
+		BoardVO result = service.viewDetail(vo);
+
+		// 3. 출력처리
+		RequestDispatcher rd = 
+				request.getRequestDispatcher("view.jsp");
+		// JSP에게 데이터 전달
+		// JSP에게 전달되는 request 객체에 원하는 데이터를 붙여서 전달
+		request.setAttribute("selectedPOST", result);
+		rd.forward(request, response); // request & response JSP에게 전달
 	}
 
 }

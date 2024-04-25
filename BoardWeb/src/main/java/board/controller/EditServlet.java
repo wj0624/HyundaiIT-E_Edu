@@ -2,7 +2,6 @@ package board.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,16 +14,16 @@ import board.service.BoardService;
 import board.vo.BoardVO;
 
 /**
- * Servlet implementation class WriteServlet
+ * Servlet implementation class EditServlet
  */
-@WebServlet("/write")
-public class WriteServlet extends HttpServlet {
+@WebServlet("/edit")
+public class EditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WriteServlet() {
+    public EditServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,31 +41,35 @@ public class WriteServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		// 1. 입력받고(Controller 역할)
+		
+		// 1. 입력
+		String postID = request.getParameter("postID");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
-		String author = request.getParameter("userID");
 		
 		BoardVO vo = new BoardVO();
+		vo.setPost_id(Integer.parseInt(postID));
 		vo.setTitle(title);
 		vo.setContent(content);
-		vo.setAuthor(author);
 		
 		// 2. 로직처리
 		BoardService service = new BoardService();
-		List<BoardVO> result = service.writeArticle(vo);
+		BoardVO result = service.editArticle(vo);
 		
 		// 3. 출력처리
-		String script = "<script>alert('글이 등록되었습니다'); location.href='articles';</script>";
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.print(script);
-//		RequestDispatcher rd = 
-//				request.getRequestDispatcher("board.jsp");
-//		// JSP에게 데이터 전달
-//		// JSP에게 전달되는 request 객체에 원하는 데이터를 붙여서 전달
-		request.setAttribute("boardList", result);
-//		rd.forward(request, response); // request & response JSP에게 전달
+		// 3. 출력처리
+		RequestDispatcher rd = 
+				request.getRequestDispatcher("view.jsp");
+		// JSP에게 데이터 전달
+		// JSP에게 전달되는 request 객체에 원하는 데이터를 붙여서 전달
+		request.setAttribute("selectedPOST", result);
+		rd.forward(request, response); // request & response JSP에게 전달
+//		request.setAttribute("selectedPOST", result);
+//		String script = "<script>alert('글이 수정되었습니다'); location.href='view.jsp';</script>";
+//		response.setContentType("text/html; charset=UTF-8");
+//		PrintWriter out = response.getWriter();
+//		out.print(script);
+		
 	}
 
 }

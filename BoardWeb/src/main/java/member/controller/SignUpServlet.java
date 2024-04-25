@@ -62,7 +62,7 @@ public class SignUpServlet extends HttpServlet {
 		
 		// 3. 출력처리
 		//회원가입 성공 alert 띄우기
-		String script = "<script>alert('회원가입 성공! 로그인 페이지로 이동합니다.'); window.location.href='html/login.html';</script>";
+		String script = "<script>alert('회원가입 성공! 로그인 페이지로 이동합니다.'); location.href='login.html';</script>";
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.print(script);

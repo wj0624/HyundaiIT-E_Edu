@@ -63,12 +63,12 @@ public class MemberChangeServlet extends HttpServlet {
 		
 		// 3. 출력처리
 		//로그인 성공 alert 띄우기
-		String script = "<script>alert('회원정보 수정 성공!'); window.location.href='/board/articles';</script>";
+		String script = "<script>alert('회원정보 수정 성공!'); location.href='articles';</script>";
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.print(script);
 //		RequestDispatcher rd = 
-//				request.getRequestDispatcher("jsp/board.jsp");
+//				request.getRequestDispatcher("board.jsp");
 //		rd.forward(request, response); // request & response JSP에게 전달
 	}
 

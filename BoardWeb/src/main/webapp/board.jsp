@@ -64,6 +64,7 @@
 		        border-radius: 5px;
 		        padding-left: 10px;
 		        background-color: rgb(164, 199, 255);
+		        cursor: pointer;
 		    }
 		    button:active {
 		        width: 100px;
@@ -89,14 +90,20 @@
             }
             
             a {
-            	margin-left: 5px;
+            	margin-left: 10px;
+		        color: darkgray;
+		        text-decoration-line: none;
+   			}
+   			
+            input {
 		        font-size: 15px;
 		        color: darkgray;
 		        text-decoration-line: none;
+		        background-color: transparent; /* 배경색 없애기 */
+		        border: none; /* 테두리 없애기 */
+		        cursor: pointer; /* 커서 모양 변경 */
 	    	}
-	    	.btn{
-	    		margin-left: 5px;
-	    	}
+	    	
         	
 		</style>
 	</head>
@@ -118,7 +125,7 @@
 		        <% } else { %>
 		            <!-- 사용자 이름 -->
 		            <div id="userName"> <%= vo.getName() %>님 </div>
-		            <a href="jsp/mypage.jsp">마이페이지</a>
+		            <a href="mypage.jsp">마이페이지</a>
 		            <form action="http://localhost:8080/board/logout" method="post">
 		            	<input type="submit" value="로그아웃" class="btn">
 		            </form>
@@ -129,12 +136,12 @@
    		<script>
 	   		// 로그인 페이지로 이동
 	        function goToLoginPage() {
-	            window.location.href = "html/login.html";
+	            window.location.href = "login.html";
 	        }
 	
 	        // 회원가입 페이지로 이동
 	        function goToSignupPage() {
-	            window.location.href = "html/signup.html";
+	            window.location.href = "signup.html";
 	        }
 	        
    		</script>
@@ -155,7 +162,12 @@
                 <% for (BoardVO board : boardList) { %>
                     <tr>
                         <td><%= board.getPost_id() %></td>
-                        <td><a href="view.jsp?id=<%= board.getPost_id() %>"><%= board.getTitle() %></a></td>
+                        <td>
+	                        <form action="http://localhost:8080/board/view" method="post">
+	                        	<input type="hidden" name="postID" value="<%= String.valueOf(board.getPost_id()) %>">
+	                        	<input type="submit" value="<%= board.getTitle() %>">
+	                        </form>
+                        </td>
                         <td><%= board.getName() %></td>
                         <td><%= board.getCreated_date() %></td>
                     </tr>
@@ -169,7 +181,7 @@
 		</table>
 		<table>
 			<tr>
-				<td><button onclick="location.href='jsp/write.jsp'">글쓰기</button></td>
+				<td><button onclick="location.href='write.jsp'">글쓰기</button></td>
 			</tr>
 		</table>
 

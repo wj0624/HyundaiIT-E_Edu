@@ -18,7 +18,6 @@
 	        width: 280px;
 	        height: 550px;
 	        margin: auto;
-	        
 	    }
 	    .text {
 	        width: 250px;
@@ -60,13 +59,17 @@
 	        padding-left: 10px;
 	        background-color: rgb(61, 135, 255);
 	    }
-	    a {
-	        font-size: 15px;
+    	.delete {
+		    text-align: center;
+		    font-size: 15px;
 	        color: darkgray;
 	        text-decoration-line: none;
-    	}
-    	.join {
-		    text-align: center;
+	        background-color: transparent; /* 배경색 없애기 */
+	        border: none; /* 테두리 없애기 */
+	        cursor: pointer; /* 커서 모양 변경 */
+	        display: block; /* 가로로 배치되는 인라인 요소를 블록 요소로 변경 */
+	        margin: auto; /* 가운데 정렬 */
+	        width: fit-content; /* 내용에 맞게 너비 설정 */
 		}
 	</style>
 </head>
@@ -104,10 +107,16 @@
 	        </td>
 	    </tr>
 	    <tr><td><input type="submit" value="수정하기" class="btn"></td></tr>
-    	<tr>
-        	<td class="join"><a href="signup.html" >회원탈퇴</a></td>
-    	</tr>
-    </table>
-</form>
+	    </table>
+	    </form>
+        <form action="http://localhost:8080/board/delete" method="post">
+
+        		<input type="hidden" name="userID" value="<%= vo.getUserID() %>">
+           	 	<input type="submit" value="회원탈퇴" class="delete">
+    
+		</form>
+
+    
+
 </body>
 </html>

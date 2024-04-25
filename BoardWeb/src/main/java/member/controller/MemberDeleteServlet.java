@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import member.service.MemberService;
 import member.vo.MemberVO;
@@ -49,8 +50,12 @@ public class MemberDeleteServlet extends HttpServlet {
 		MemberService service = new MemberService();
 		int result = service.deleteMember(vo);
 		
-		if(result == 1) {			
-			String script = "<script>alert('회원탈퇴가 완료되었습니다.'); window.location.href='/board/articles';</script>";
+		if(result == 1) {
+			HttpSession session = request.getSession(false); // 기존 세션 가져오기
+		    if (session != null) {
+		        session.invalidate(); // 세션 무효화
+		    }
+			String script = "<script>alert('회원탈퇴가 완료되었습니다.'); location.href='articles';</script>";
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.print(script);
