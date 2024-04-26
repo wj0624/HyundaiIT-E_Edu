@@ -63,4 +63,9 @@ ORDER BY post_id DESC;
 
 SELECT post_id, title, content, name, created_date
 FROM board
-WHERE post_id = ${post_id}
+WHERE post_id = 2;
+
+SELECT * from comment;
+
+INSERT INTO comment (userID, userName, content, post_id)
+VALUES ("won4538", (SELECT name FROM member WHERE userID = "won4538"), "집가고 싶다", 1);

@@ -86,4 +86,26 @@
 		]]>
 	</delete>
 	
+	<!-- 댓글 -->
+	<insert id="insertComment" parameterType="CommentVO">
+		<![CDATA[
+			INSERT INTO comment (userID, userName, content, post_id)
+        	VALUES (#{userID}, #{userName}, #{content}, ${post_id})
+		]]>
+	</insert>
+	
+	<select id="selectComments" parameterType="CommentVO" resultType="CommentVO">
+		<![CDATA[
+			SELECT *
+			FROM comment
+			WHERE post_id = ${post_id}
+		]]>
+	</select>
+	
+	<delete id="deleteComment" parameterType="CommentVO">
+		<![CDATA[
+			DELETE FROM comment
+			WHERE comment_id = ${comment_id}
+		]]>
+	</delete>
 </mapper>

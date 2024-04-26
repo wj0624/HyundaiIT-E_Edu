@@ -1,4 +1,4 @@
-package board.controller;
+package comment.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,16 +16,16 @@ import comment.service.CommentService;
 import comment.vo.CommentVO;
 
 /**
- * Servlet implementation class ViewServlet
+ * Servlet implementation class WriteCmntServlet
  */
-@WebServlet("/view")
-public class ViewServlet extends HttpServlet {
+@WebServlet("/writeCmnt")
+public class WriteCmntServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ViewServlet() {
+    public WriteCmntServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,21 +43,28 @@ public class ViewServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
 		// 1. 입력받고(Controller 역할)
+		String userID = request.getParameter("userID");
+		String userName = request.getParameter("userName");
+		String content = request.getParameter("comment");
 		String postID = request.getParameter("postID");
-		BoardVO vo = new BoardVO();
-		vo.setPost_id(Integer.parseInt(postID));
+		
 		CommentVO cvo = new CommentVO();
+		cvo.setUserID(userID);
+		cvo.setUserName(userName);
+		cvo.setContent(content);
 		cvo.setPost_id(Integer.parseInt(postID));
 		
-		// 2. 로직처리(Service에게 위임)
+		BoardVO bvo = new BoardVO();
+		bvo.setPost_id(Integer.parseInt(postID));
+		
+		// 2. 로직처리
 		BoardService service = new BoardService();
-		BoardVO result = service.viewDetail(vo);
+		BoardVO result = service.viewDetail(bvo);
 		
 		CommentService cService = new CommentService();
-		List<CommentVO> cResult = cService.showComments(cvo);
-
+		List<CommentVO> cResult = cService.writeComment(cvo);
+		
 		// 3. 출력처리
 		RequestDispatcher rd = 
 				request.getRequestDispatcher("view.jsp");
@@ -67,5 +74,4 @@ public class ViewServlet extends HttpServlet {
 		request.setAttribute("comment", cResult);
 		rd.forward(request, response); // request & response JSP에게 전달
 	}
-
 }

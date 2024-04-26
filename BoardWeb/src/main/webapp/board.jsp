@@ -9,12 +9,6 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>게시판</title>
-		<!-- jQuery에 대한 CDN -->
-	    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
-			integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
-			crossorigin="anonymous"></script>
-			
-		<script src="js/board.js"></script>
 		<style>
 			/* 화면 전체를 커버하는 컨테이너에 대해 중앙 정렬 스타일 적용 */
             .container {

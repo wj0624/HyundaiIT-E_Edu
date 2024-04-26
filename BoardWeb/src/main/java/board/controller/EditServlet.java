@@ -57,7 +57,6 @@ public class EditServlet extends HttpServlet {
 		BoardVO result = service.editArticle(vo);
 		
 		// 3. 출력처리
-		// 3. 출력처리
 		RequestDispatcher rd = 
 				request.getRequestDispatcher("view.jsp");
 		// JSP에게 데이터 전달
