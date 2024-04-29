@@ -34,7 +34,7 @@ public class CommentService {
 		return result;
 	}
 	
-	// 글 목록 가져오기
+	// 댓글 목록 가져오기
 	public List<CommentVO> showComments(CommentVO vo) {
 		SqlSessionFactory factory = 
 				MyBatisConnectionFactory.getSqlSessionFactory();
@@ -55,17 +55,18 @@ public class CommentService {
 	}
 	
 	// 편집
-	public List<CommentVO> editComment(CommentVO vo) {
+	public int editComment(CommentVO vo) {
 		SqlSessionFactory factory = 
 				MyBatisConnectionFactory.getSqlSessionFactory();
 		SqlSession session = factory.openSession();
 		
-		List<CommentVO> result = null;
+		int count = 0;
 		try {
 			// 트랜잭션 시작
 			CommentDAO dao = new CommentDAO(session);
-			int count = dao.updateComment(vo);
-			result = dao.selectComments(vo);
+			count = dao.updateComment(vo);
+			//System.out.println("service: "+vo);
+			//System.out.println("service count: "+count);
 			
 		} catch (Exception e) {
 			System.out.println(e);
@@ -74,9 +75,10 @@ public class CommentService {
 			session.commit();
 			session.close(); // 트랜잭션 종료
 		}
-		return result;
+		return count;
 	}
-
+	
+	// 댓글 삭제
 	public int deleteComment(CommentVO vo) {
 		SqlSessionFactory factory = 
 				MyBatisConnectionFactory.getSqlSessionFactory();

@@ -203,7 +203,7 @@
 	            <% for (CommentVO cmnt : comments) { %>
                		<tr id="<%= cmnt.getComment_id() %>">
                         <td><strong><%= cmnt.getUserName() %></strong></td>
-                    	<td id="edit+<%= cmnt.getComment_id() %>" colspan="3"><%= cmnt.getContent() %></td>
+                    	<td colspan="3"><p id="editCmnt_<%= cmnt.getComment_id() %>"><%= cmnt.getContent() %></p></td>
                     	<td></td>
                         <td><%= cmnt.getCreated_date() %></td>
                         <% 
@@ -218,8 +218,8 @@
                         	if (hasCmntPermission) { %>
 					    	<td colspan="2" class="edit">
 					    		<div class="form-group">
-									<button id="cmntEdit" onclick="cmntEdit(<%=cmnt.getComment_id()%>, )">수정</button>
-						    		<button id="cmntDelete" onclick="cmntDelete(<%=cmnt.getComment_id()%>)">삭제</button>
+									<button id="cmntEdit<%= cmnt.getComment_id() %>" onclick="cmntEdit(<%=cmnt.getComment_id()%>)">수정</button>
+						    		<button id="cmntDelete<%= cmnt.getComment_id() %>" onclick="cmntDelete(<%=cmnt.getComment_id()%>)">삭제</button>
 						    	</div>
 					    	</td>
 				    	<% } %>

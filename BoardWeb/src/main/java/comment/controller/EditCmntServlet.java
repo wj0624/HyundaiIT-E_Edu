@@ -2,6 +2,7 @@ package comment.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,11 +43,15 @@ public class EditCmntServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String comment_id = request.getParameter("comment_id");
+		String content = request.getParameter("content");
 		CommentVO vo = new CommentVO();
 		vo.setComment_id(Integer.parseInt(comment_id));
+		vo.setContent(content);
+		//System.out.println("Servlet: "+vo);
 		
 		CommentService service = new CommentService();
-		int result = service.deleteComment(vo);
+		int result = service.editComment(vo);
+		System.out.println("result:"+result);
 		
 		if(result == 1) {
 			PrintWriter out = response.getWriter();

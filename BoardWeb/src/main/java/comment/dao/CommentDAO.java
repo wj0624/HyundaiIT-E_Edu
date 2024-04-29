@@ -32,6 +32,8 @@ public class CommentDAO {
 	public int updateComment(CommentVO vo) {
 		int result = 0;
 		result = session.update("mywebsite.updateComment", vo);
+		//System.out.println("dao: "+vo);
+		//System.out.println("dao count: "+result);
 		return result;
 	}
 	
